@@ -9,16 +9,20 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class InstitutionController {
-    @GetMapping("hello")
-    public String hello(){
-        return "Hali";
-    }
-
     @PostMapping("educationInstitution")
     public String educationInstitution(@RequestBody EducationalInstitution educationInstitution){
         String result = checkEducationInstitution(educationInstitution);
 
+        if (result == null)
+            saveEducationalInstitution(educationInstitution);
+
         return educationInstitution.getInstitutionData().getOmIdentificationNumber();
+    }
+
+    private void saveEducationalInstitution(EducationalInstitution educationInstitution) {
+        final String uri = "http://localhost:8083/institution-save";
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.postForObject(uri, educationInstitution,String.class);
     }
 
     private String checkEducationInstitution(EducationalInstitution educationInstitution) {
