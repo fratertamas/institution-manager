@@ -1,4 +1,4 @@
-package hu.frt;
+package hu.frt.controller;
 
 import hu.frt.EducationalInstitution;
 import org.springframework.web.bind.annotation.GetMapping;
